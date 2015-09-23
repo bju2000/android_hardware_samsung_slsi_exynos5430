@@ -68,6 +68,7 @@ struct s3c_fb_win_config {
 		S3C_FB_WIN_STATE_OTF,
 		S3C_FB_WIN_STATE_UPDATE,
 	} state;
+
 	union {
 		__u32 color;
 		struct {
@@ -92,15 +93,21 @@ struct s3c_fb_win_config {
 	int y;
 	__u32 w;
 	__u32 h;
-	bool	protection;
+	bool protection;
 };
 
 #define S3C_FB_MAX_WIN (5)
 #define S3C_WIN_UPDATE_IDX (5)
 #define DEV_DECON	6
+#define CONFIG_FB_WINDOW_UPDATE 1
+
 struct s3c_fb_win_config_data {
 	int fence;
+#ifdef CONFIG_FB_WINDOW_UPDATE
 	struct s3c_fb_win_config config[S3C_FB_MAX_WIN + 1];
+#else
+	struct s3c_fb_win_config config[S3C_FB_MAX_WIN];
+#endif
 };
 
 /* IOCTL commands */
